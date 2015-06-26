@@ -5,6 +5,7 @@ using LiveSplit.UI.Components;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -16,8 +17,11 @@ namespace LiveSplit.UI.Components
     {
         protected ITimeFormatter TimeFormatter { get; set; }
         protected InfoTimeComponent InternalComponent { get; set; }
+        protected TotalPlaytimeSettings Settings { get; set; }
+
         protected TimerPhase LastPhase { get; set; }
         protected int LastAttemptCount { get; set; }
+        protected IRun LastRun { get; set; }
 
         public string ComponentName
         {
@@ -73,44 +77,73 @@ namespace LiveSplit.UI.Components
         {
             TimeFormatter = new RegularTimeFormatter(TimeAccuracy.Seconds);
             InternalComponent = new InfoTimeComponent("Total Playtime", TimeSpan.Zero, TimeFormatter);
+            Settings = new TotalPlaytimeSettings()
+            {
+                CurrentState = state
+            };
+        }
+
+        private void DrawBackground(Graphics g, LiveSplitState state, float width, float height)
+        {
+            if (Settings.BackgroundColor.ToArgb() != Color.Transparent.ToArgb()
+                || Settings.BackgroundGradient != GradientType.Plain
+                && Settings.BackgroundColor2.ToArgb() != Color.Transparent.ToArgb())
+            {
+                var gradientBrush = new LinearGradientBrush(
+                            new PointF(0, 0),
+                            Settings.BackgroundGradient == GradientType.Horizontal
+                            ? new PointF(width, 0)
+                            : new PointF(0, height),
+                            Settings.BackgroundColor,
+                            Settings.BackgroundGradient == GradientType.Plain
+                            ? Settings.BackgroundColor
+                            : Settings.BackgroundColor2);
+                g.FillRectangle(gradientBrush, 0, 0, width, height);
+            }
         }
 
         public void DrawHorizontal(Graphics g, LiveSplitState state, float height, Region clipRegion)
         {
+            DrawBackground(g, state, HorizontalWidth, height);
+
             InternalComponent.NameLabel.HasShadow
                 = InternalComponent.ValueLabel.HasShadow
                 = state.LayoutSettings.DropShadows;
 
-            InternalComponent.NameLabel.ForeColor = state.LayoutSettings.TextColor;
-            InternalComponent.ValueLabel.ForeColor = state.LayoutSettings.TextColor;
+            InternalComponent.NameLabel.ForeColor = Settings.OverrideTextColor ? Settings.TextColor : state.LayoutSettings.TextColor;
+            InternalComponent.ValueLabel.ForeColor = Settings.OverrideTimeColor ? Settings.TimeColor : state.LayoutSettings.TextColor;
 
             InternalComponent.DrawHorizontal(g, state, height, clipRegion);
         }
 
         public void DrawVertical(Graphics g, LiveSplitState state, float width, Region clipRegion)
         {
+            DrawBackground(g, state, width, VerticalHeight);
+
             InternalComponent.NameLabel.HasShadow
                 = InternalComponent.ValueLabel.HasShadow
                 = state.LayoutSettings.DropShadows;
 
-            InternalComponent.NameLabel.ForeColor = state.LayoutSettings.TextColor;
-            InternalComponent.ValueLabel.ForeColor = state.LayoutSettings.TextColor;
+            InternalComponent.NameLabel.ForeColor = Settings.OverrideTextColor ? Settings.TextColor : state.LayoutSettings.TextColor;
+            InternalComponent.ValueLabel.ForeColor = Settings.OverrideTimeColor ? Settings.TimeColor : state.LayoutSettings.TextColor;
 
             InternalComponent.DrawVertical(g, state, width, clipRegion);
         }
 
         public XmlNode GetSettings(XmlDocument document)
         {
-            return document.CreateElement("element");
+            return Settings.GetSettings(document);
         }
 
         public Control GetSettingsControl(LayoutMode mode)
         {
-            return null;
+            Settings.Mode = mode;
+            return Settings;
         }
 
         public void SetSettings(XmlNode settings)
         {
+            Settings.SetSettings(settings);
         }
 
         public TimeSpan CalculateTotalPlaytime(LiveSplitState state)
@@ -156,6 +189,7 @@ namespace LiveSplit.UI.Components
         {
             if (LastAttemptCount != state.Run.AttemptHistory.Count 
                 || LastPhase != state.CurrentPhase
+                || LastRun != state.Run
                 || state.CurrentPhase == TimerPhase.Running 
                 || state.CurrentPhase == TimerPhase.Paused)
             {
@@ -163,6 +197,7 @@ namespace LiveSplit.UI.Components
 
                 LastAttemptCount = state.Run.AttemptHistory.Count;
                 LastPhase = state.CurrentPhase;
+                LastRun = state.Run;
             }
 
             InternalComponent.Update(invalidator, state, width, height, mode);
