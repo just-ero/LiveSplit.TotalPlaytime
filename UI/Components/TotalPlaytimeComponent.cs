@@ -120,6 +120,8 @@ namespace LiveSplit.UI.Components
         {
             DrawBackground(g, state, width, VerticalHeight);
 
+            InternalComponent.DisplayTwoRows = Settings.Display2Rows;
+
             InternalComponent.NameLabel.HasShadow
                 = InternalComponent.ValueLabel.HasShadow
                 = state.LayoutSettings.DropShadows;
