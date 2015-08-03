@@ -1,11 +1,8 @@
 ﻿using LiveSplit.Model;
 using LiveSplit.UI.Components;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-[assembly: ComponentFactory(typeof(LiveSplit.UI.Components.TotalPlaytimeFactory))]
+[assembly: ComponentFactory(typeof(TotalPlaytimeFactory))]
 
 namespace LiveSplit.UI.Components
 {
