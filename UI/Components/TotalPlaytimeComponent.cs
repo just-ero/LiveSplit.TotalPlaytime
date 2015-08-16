@@ -206,5 +206,10 @@ namespace LiveSplit.UI.Components
         {
             InternalComponent.Dispose();
         }
+
+        public int GetSettingsHashCode()
+        {
+            return Settings.GetSettingsHashCode();
+        }
     }
 }
