@@ -178,7 +178,7 @@ namespace LiveSplit.UI.Components
             }
             else if (state.CurrentPhase != TimerPhase.NotRunning)
             {
-                totalPlaytime += TripleDateTime.Now - state.AttemptStarted;
+                totalPlaytime += DateTime.UtcNow - state.AttemptStarted;
             }
 
             return totalPlaytime;
