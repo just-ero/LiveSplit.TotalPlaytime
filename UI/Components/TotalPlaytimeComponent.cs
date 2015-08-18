@@ -165,9 +165,9 @@ namespace LiveSplit.UI.Components
                     
                     foreach (var segment in state.Run)
                     {
-                        var segmentHistoryElement = segment.SegmentHistory.FirstOrDefault(x => x.Index == attempt.Index);
-                        if (segmentHistoryElement != null && segmentHistoryElement.Time.RealTime.HasValue)
-                            totalPlaytime += segmentHistoryElement.Time.RealTime.Value;
+                        Time segmentHistoryElement;
+                        if (segment.SegmentHistory.TryGetValue(attempt.Index, out segmentHistoryElement) && segmentHistoryElement.RealTime.HasValue)
+                            totalPlaytime += segmentHistoryElement.RealTime.Value;
                     }
                 }
             }
