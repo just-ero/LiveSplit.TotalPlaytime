@@ -72,7 +72,7 @@ namespace LiveSplit.UI.Components
 
         public TotalPlaytimeComponent(LiveSplitState state)
         {
-            TimeFormatter = new RegularTimeFormatter(TimeAccuracy.Seconds);
+            TimeFormatter = new DaysTimeFormatter();
             InternalComponent = new InfoTimeComponent("Total Playtime", TimeSpan.Zero, TimeFormatter);
             Settings = new TotalPlaytimeSettings()
             {

@@ -37,6 +37,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TimeFormatters\DaysTimeFormatter.cs" />
     <Compile Include="UI\Components\TotalPlaytimeComponent.cs" />
     <Compile Include="UI\Components\TotalPlaytimeFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
