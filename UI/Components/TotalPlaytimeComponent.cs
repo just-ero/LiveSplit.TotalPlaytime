@@ -12,7 +12,8 @@ namespace LiveSplit.UI.Components
 {
     public class TotalPlaytimeComponent : IComponent
     {
-        protected ITimeFormatter TimeFormatter { get; set; }
+        protected ITimeFormatter HoursTimeFormatter { get; set; }
+        protected ITimeFormatter DaysTimeFormatter { get; set; }
         protected InfoTimeComponent InternalComponent { get; set; }
         protected TotalPlaytimeSettings Settings { get; set; }
 
@@ -72,8 +73,9 @@ namespace LiveSplit.UI.Components
 
         public TotalPlaytimeComponent(LiveSplitState state)
         {
-            TimeFormatter = new DaysTimeFormatter();
-            InternalComponent = new InfoTimeComponent("Total Playtime", TimeSpan.Zero, TimeFormatter);
+            HoursTimeFormatter = new RegularTimeFormatter();
+            DaysTimeFormatter = new DaysTimeFormatter();
+            InternalComponent = new InfoTimeComponent("Total Playtime", TimeSpan.Zero, DaysTimeFormatter);
             Settings = new TotalPlaytimeSettings()
             {
                 CurrentState = state
@@ -186,6 +188,8 @@ namespace LiveSplit.UI.Components
 
         public void Update(IInvalidator invalidator, LiveSplitState state, float width, float height, LayoutMode mode)
         {
+            InternalComponent.Formatter = Settings.ShowTotalHours ? HoursTimeFormatter : DaysTimeFormatter;
+
             if (LastAttemptCount != state.Run.AttemptHistory.Count 
                 || LastPhase != state.CurrentPhase
                 || LastRun != state.Run

@@ -24,6 +24,7 @@ namespace LiveSplit.UI.Components
 
         public LiveSplitState CurrentState { get; set; }
         public bool Display2Rows { get; set; }
+        public bool ShowTotalHours { get; set; }
 
         public LayoutMode Mode { get; set; }
 
@@ -39,6 +40,7 @@ namespace LiveSplit.UI.Components
             BackgroundColor2 = Color.Transparent;
             BackgroundGradient = GradientType.Plain;
             Display2Rows = false;
+            ShowTotalHours = false;
 
             chkOverrideTextColor.DataBindings.Add("Checked", this, "OverrideTextColor", false, DataSourceUpdateMode.OnPropertyChanged);
             btnTextColor.DataBindings.Add("BackColor", this, "TextColor", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -47,6 +49,7 @@ namespace LiveSplit.UI.Components
             cmbGradientType.DataBindings.Add("SelectedItem", this, "GradientString", false, DataSourceUpdateMode.OnPropertyChanged);
             btnColor1.DataBindings.Add("BackColor", this, "BackgroundColor", false, DataSourceUpdateMode.OnPropertyChanged);
             btnColor2.DataBindings.Add("BackColor", this, "BackgroundColor2", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkShowTotalHours.DataBindings.Add("Checked", this, "ShowTotalHours", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         void chkOverrideTimeColor_CheckedChanged(object sender, EventArgs e)
@@ -96,6 +99,7 @@ namespace LiveSplit.UI.Components
             BackgroundColor2 = SettingsHelper.ParseColor(element["BackgroundColor2"]);
             GradientString = SettingsHelper.ParseString(element["BackgroundGradient"]);
             Display2Rows = SettingsHelper.ParseBool(element["Display2Rows"]);
+            ShowTotalHours = SettingsHelper.ParseBool(element["ShowTotalHours"], false);
         }
 
         public XmlNode GetSettings(XmlDocument document)
@@ -120,7 +124,8 @@ namespace LiveSplit.UI.Components
             SettingsHelper.CreateSetting(document, parent, "BackgroundColor", BackgroundColor) ^
             SettingsHelper.CreateSetting(document, parent, "BackgroundColor2", BackgroundColor2) ^
             SettingsHelper.CreateSetting(document, parent, "BackgroundGradient", BackgroundGradient) ^
-            SettingsHelper.CreateSetting(document, parent, "Display2Rows", Display2Rows);
+            SettingsHelper.CreateSetting(document, parent, "Display2Rows", Display2Rows) ^
+            SettingsHelper.CreateSetting(document, parent, "ShowTotalHours", ShowTotalHours);
         }
 
         private void ColorButtonClick(object sender, EventArgs e)

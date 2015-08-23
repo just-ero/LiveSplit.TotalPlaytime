@@ -44,6 +44,7 @@
             this.btnColor1 = new System.Windows.Forms.Button();
             this.btnColor2 = new System.Windows.Forms.Button();
             this.chkTwoRows = new System.Windows.Forms.CheckBox();
+            this.chkShowTotalHours = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -65,6 +66,7 @@
             this.tableLayoutPanel1.Controls.Add(this.btnColor1, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnColor2, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.chkTwoRows, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.chkShowTotalHours, 3, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(7, 7);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -269,6 +271,18 @@
             this.chkTwoRows.Text = "Display 2 Rows";
             this.chkTwoRows.UseVisualStyleBackColor = true;
             // 
+            // chkShowTotalHours
+            // 
+            this.chkShowTotalHours.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkShowTotalHours.AutoSize = true;
+            this.chkShowTotalHours.Location = new System.Drawing.Point(224, 35);
+            this.chkShowTotalHours.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
+            this.chkShowTotalHours.Name = "chkShowTotalHours";
+            this.chkShowTotalHours.Size = new System.Drawing.Size(235, 17);
+            this.chkShowTotalHours.TabIndex = 37;
+            this.chkShowTotalHours.Text = "Show Total Hours";
+            this.chkShowTotalHours.UseVisualStyleBackColor = true;
+            // 
             // TotalPlaytimeSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -308,5 +322,6 @@
         private System.Windows.Forms.Button btnColor1;
         private System.Windows.Forms.Button btnColor2;
         private System.Windows.Forms.CheckBox chkTwoRows;
+        private System.Windows.Forms.CheckBox chkShowTotalHours;
     }
 }
