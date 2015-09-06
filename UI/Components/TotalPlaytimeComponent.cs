@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -21,55 +20,25 @@ namespace LiveSplit.UI.Components
         protected int LastAttemptCount { get; set; }
         protected IRun LastRun { get; set; }
 
-        public string ComponentName
-        {
-            get { return "Total Playtime"; }
-        }
+        public string ComponentName => "Total Playtime";
 
-        public IDictionary<string, Action> ContextMenuControls
-        {
-            get { return null; }
-        }
+        public IDictionary<string, Action> ContextMenuControls => null;
 
-        public float HorizontalWidth
-        {
-            get { return InternalComponent.HorizontalWidth; }
-        }
+        public float HorizontalWidth => InternalComponent.HorizontalWidth;
 
-        public float VerticalHeight
-        {
-            get { return InternalComponent.VerticalHeight; }
-        }
+        public float VerticalHeight => InternalComponent.VerticalHeight;
 
-        public float MinimumHeight
-        {
-            get { return InternalComponent.MinimumHeight; }
-        }
+        public float MinimumHeight => InternalComponent.MinimumHeight;
 
-        public float MinimumWidth
-        {
-            get { return InternalComponent.MinimumWidth; }
-        }
+        public float MinimumWidth => InternalComponent.MinimumWidth;
 
-        public float PaddingBottom
-        {
-            get { return InternalComponent.PaddingBottom; }
-        }
+        public float PaddingBottom => InternalComponent.PaddingBottom;
 
-        public float PaddingLeft
-        {
-            get { return InternalComponent.PaddingLeft; }
-        }
+        public float PaddingLeft => InternalComponent.PaddingLeft;
 
-        public float PaddingRight
-        {
-            get { return InternalComponent.PaddingRight; }
-        }
+        public float PaddingRight => InternalComponent.PaddingRight;
 
-        public float PaddingTop
-        {
-            get { return InternalComponent.PaddingTop; }
-        }
+        public float PaddingTop => InternalComponent.PaddingTop;
 
         public TotalPlaytimeComponent(LiveSplitState state)
         {
@@ -211,9 +180,6 @@ namespace LiveSplit.UI.Components
             InternalComponent.Dispose();
         }
 
-        public int GetSettingsHashCode()
-        {
-            return Settings.GetSettingsHashCode();
-        }
+        public int GetSettingsHashCode() => Settings.GetSettingsHashCode();
     }
 }

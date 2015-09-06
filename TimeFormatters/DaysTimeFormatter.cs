@@ -1,28 +1,26 @@
 ﻿using System;
 using System.Globalization;
+using System.Text;
 
 namespace LiveSplit.TimeFormatters
 {
     public class DaysTimeFormatter : ITimeFormatter
     {
-        public DaysTimeFormatter()
-        {
-        }
-
         public string Format(TimeSpan? time)
         {
             if (time.HasValue)
             {
-                var formatted = string.Empty;
+                var builder = new StringBuilder();
+
                 if (time.Value.TotalDays >= 1)
-                    formatted = (int)time.Value.TotalDays + "d ";
+                    builder.Append(time.Value.TotalDays).Append("d ");
 
                 if (time.Value.TotalHours >= 1)
-                    formatted += time.Value.ToString(@"h\:mm\:ss", CultureInfo.InvariantCulture);
+                    builder.Append(time.Value.ToString(@"h\:mm\:ss", CultureInfo.InvariantCulture));
                 else
-                    formatted += time.Value.ToString(@"m\:ss", CultureInfo.InvariantCulture);
+                    builder.Append(time.Value.ToString(@"m\:ss", CultureInfo.InvariantCulture));
 
-                return formatted;
+                return builder.ToString();
             }
             return "0";
         }
