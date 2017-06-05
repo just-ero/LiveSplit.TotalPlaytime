@@ -127,7 +127,7 @@ namespace LiveSplit.UI.Components
                 if (duration.HasValue)
                 {
                     //Either >= 1.6.0 or a finished run
-                    totalPlaytime += duration.Value;
+                    totalPlaytime += duration.Value - (attempt.PauseTime ?? TimeSpan.Zero);
                 }
                 else
                 {
@@ -143,14 +143,7 @@ namespace LiveSplit.UI.Components
                 }
             }
 
-            if (state.CurrentPhase == TimerPhase.Ended)
-            {
-                totalPlaytime += state.AttemptEnded - state.AttemptStarted;
-            }
-            else if (state.CurrentPhase != TimerPhase.NotRunning)
-            {
-                totalPlaytime += TimeStamp.CurrentDateTime - state.AttemptStarted;
-            }
+            totalPlaytime += state.CurrentAttemptDuration - (state.PauseTime ?? TimeSpan.Zero);
 
             return totalPlaytime;
         }
