@@ -1,11 +1,12 @@
-﻿using LiveSplit.Model;
-using LiveSplit.TimeFormatters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.Xml;
+
+using LiveSplit.Model;
+using LiveSplit.TimeFormatters;
 
 namespace LiveSplit.UI.Components
 {
@@ -54,8 +55,8 @@ namespace LiveSplit.UI.Components
         private void DrawBackground(Graphics g, LiveSplitState state, float width, float height)
         {
             if (Settings.BackgroundColor.A > 0
-                || Settings.BackgroundGradient != GradientType.Plain
-                && Settings.BackgroundColor2.A > 0)
+                || (Settings.BackgroundGradient != GradientType.Plain
+                && Settings.BackgroundColor2.A > 0))
             {
                 var gradientBrush = new LinearGradientBrush(
                             new PointF(0, 0),
@@ -133,12 +134,13 @@ namespace LiveSplit.UI.Components
                 {
                     //Must be < 1.6.0 and a reset
                     //Calculate the sum of the segments for that run
-                    
+
                     foreach (var segment in state.Run)
                     {
-                        Time segmentHistoryElement;
-                        if (segment.SegmentHistory.TryGetValue(attempt.Index, out segmentHistoryElement) && segmentHistoryElement.RealTime.HasValue)
+                        if (segment.SegmentHistory.TryGetValue(attempt.Index, out var segmentHistoryElement) && segmentHistoryElement.RealTime.HasValue)
+                        {
                             totalPlaytime += segmentHistoryElement.RealTime.Value;
+                        }
                     }
                 }
             }
@@ -152,10 +154,10 @@ namespace LiveSplit.UI.Components
         {
             InternalComponent.Formatter = Settings.ShowTotalHours ? HoursTimeFormatter : DaysTimeFormatter;
 
-            if (LastAttemptCount != state.Run.AttemptHistory.Count 
+            if (LastAttemptCount != state.Run.AttemptHistory.Count
                 || LastPhase != state.CurrentPhase
                 || LastRun != state.Run
-                || state.CurrentPhase == TimerPhase.Running 
+                || state.CurrentPhase == TimerPhase.Running
                 || state.CurrentPhase == TimerPhase.Paused)
             {
                 InternalComponent.TimeValue = CalculateTotalPlaytime(state);
@@ -173,6 +175,9 @@ namespace LiveSplit.UI.Components
             InternalComponent.Dispose();
         }
 
-        public int GetSettingsHashCode() => Settings.GetSettingsHashCode();
+        public int GetSettingsHashCode()
+        {
+            return Settings.GetSettingsHashCode();
+        }
     }
 }

@@ -1,8 +1,9 @@
-﻿using LiveSplit.Model;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
+
+using LiveSplit.Model;
 
 namespace LiveSplit.UI.Components
 {
@@ -52,17 +53,17 @@ namespace LiveSplit.UI.Components
             chkShowTotalHours.DataBindings.Add("Checked", this, "ShowTotalHours", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
-        void chkOverrideTimeColor_CheckedChanged(object sender, EventArgs e)
+        private void chkOverrideTimeColor_CheckedChanged(object sender, EventArgs e)
         {
             label2.Enabled = btnTimeColor.Enabled = chkOverrideTimeColor.Checked;
         }
 
-        void chkOverrideTextColor_CheckedChanged(object sender, EventArgs e)
+        private void chkOverrideTextColor_CheckedChanged(object sender, EventArgs e)
         {
             label1.Enabled = btnTextColor.Enabled = chkOverrideTextColor.Checked;
         }
 
-        void TotalPlaytimeSettings_Load(object sender, EventArgs e)
+        private void TotalPlaytimeSettings_Load(object sender, EventArgs e)
         {
             chkOverrideTextColor_CheckedChanged(null, null);
             chkOverrideTimeColor_CheckedChanged(null, null);
@@ -80,7 +81,7 @@ namespace LiveSplit.UI.Components
             }
         }
 
-        void cmbGradientType_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmbGradientType_SelectedIndexChanged(object sender, EventArgs e)
         {
             btnColor1.Visible = cmbGradientType.SelectedItem.ToString() != "Plain";
             btnColor2.DataBindings.Clear();

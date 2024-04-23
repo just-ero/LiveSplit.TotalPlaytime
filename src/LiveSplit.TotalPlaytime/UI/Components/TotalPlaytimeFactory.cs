@@ -1,6 +1,7 @@
-﻿using LiveSplit.Model;
+﻿using System;
+
+using LiveSplit.Model;
 using LiveSplit.UI.Components;
-using System;
 
 [assembly: ComponentFactory(typeof(TotalPlaytimeFactory))]
 
@@ -12,7 +13,10 @@ namespace LiveSplit.UI.Components
 
         public string ComponentName => "Total Playtime";
 
-        public IComponent Create(LiveSplitState state) => new TotalPlaytimeComponent(state);
+        public IComponent Create(LiveSplitState state)
+        {
+            return new TotalPlaytimeComponent(state);
+        }
 
         public string Description => "Shows the total playtime for running with these splits.";
 
